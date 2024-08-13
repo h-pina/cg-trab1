@@ -6,9 +6,12 @@ namespace CG{
 		:	m_vertices(vertices)
 	{ }
 
-	GameObject::GameObject( float* vertices, const char* textureFile)
-		:	m_tex(Tex2D(textureFile)),
-			m_vertices(vertices)
+	GameObject::GameObject( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord,float* position)
+		:	m_tex(Tex2D(textureFile,texcoord)),
+			m_vertices(vertices),
+			speedX(SpeedX),
+			speedY(SpeedY),
+			m_position(position)
 	{ }
 
 	void GameObject::applyModelView(){
@@ -17,10 +20,21 @@ namespace CG{
 		glRotatef(m_rotation, 0, 0, 1);
 	}
 
+	float* GameObject::getSpeed(){
+		float speedGroup[2] = {speedX,speedY};
+		return speedGroup;
+	}
+
 	void GameObject::setVertices(float* vertices){
 		m_vertices = vertices;
 	}
-
+	void GameObject::setPosition(float* pos){
+		m_position = pos;
+	}
+	float* GameObject::getPosition()
+	{
+		return m_position;
+	}
 	float* GameObject::getVertices(){
 		return m_vertices;
 	}
