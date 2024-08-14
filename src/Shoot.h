@@ -23,10 +23,12 @@ namespace CG {
 
 			int getDamage(); // Getter for damage
 			void setDamage(int damage); // Setter for damage
-			
+			int getStatus();
+			void changeStatus();
 			
 
 		private:
 			int m_damage; // Added damage attribute
+			int m_active;
 	};
 }
