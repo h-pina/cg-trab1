@@ -7,8 +7,8 @@
 
 
 namespace CG{
-	Player::Player( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord,float* pos)
-		: GameObject(vertices, textureFile,SpeedY,SpeedX,texcoord,pos)	
+	Player::Player( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
+		: GameObject(vertices, textureFile,SpeedY,SpeedX,texcoord)	
 	{ 
 		mouseButtonState = GLUT_UP;
 
@@ -60,24 +60,24 @@ namespace CG{
 	
 	
 
-	void frame(int value) {
+	// void frame(int value) {
 
-		// Get current time in milliseconds
-		int now_ms = get_current_milliseconds();
+	// 	// Get current time in milliseconds
+	// 	int now_ms = get_current_milliseconds();
 		
-		// Example mouse state check (replace with actual state check)
+	// 	// Example mouse state check (replace with actual state check)
 		
-		printf("miliseg %d\n", now_ms);
-		// Check if the left mouse button is pressed and if seconds are even
-		if (mouseButtonState == GLUT_DOWN && ((now_ms % 400)< 30)) {
-			float* pos=getPosition();
-			disparaProjetil(pos[0], pos[1] + 50); // Dispara o projétil a partir da posição atual do avião
+	// 	printf("miliseg %d\n", now_ms);
+	// 	// Check if the left mouse button is pressed and if seconds are even
+	// 	if (mouseButtonState == GLUT_DOWN && ((now_ms % 400)< 30)) {
+	// 		float* pos=getPosition();
+	// 		disparaProjetil(pos[0], pos[1] + 50); // Dispara o projétil a partir da posição atual do avião
 			
-		}
-		atualizaProjeteis(); // Atualiza a posição dos projéteis
-		glutPostRedisplay(); // Redesenha a tela
-		glutTimerFunc(value, frame, value); // Define o próximo frame
-	}
+	// 	}
+	// 	atualizaProjeteis(); // Atualiza a posição dos projéteis
+	// 	glutPostRedisplay(); // Redesenha a tela
+	// 	glutTimerFunc(value, frame, value); // Define o próximo frame
+	// }
 
 	
 

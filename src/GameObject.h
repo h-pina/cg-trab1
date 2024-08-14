@@ -14,8 +14,7 @@ namespace CG {
 				const char* textureFile,
 				float SpeedY,
 				float SpeedX, 
-				float* texcoord,
-				float* position
+				float* texcoord
 				
 			);
 
@@ -23,12 +22,16 @@ namespace CG {
 			//create at center
 			GameObject(float* vertices);
 
-			float* getVertices();
+			
+			void applyModelView();
+			void draw();
+			void defineObjectBox();
 			float* getSpeed();
 			void setVertices(float* vertices);
-			void applyModelView();
 			void setPosition(float* pos);
 			float* getPosition();
+			float* getVertices();
+			
 			Tex2D m_tex;
 
 		private:

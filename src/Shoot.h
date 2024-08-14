@@ -8,7 +8,10 @@ namespace CG {
 			Shoot(
 				float* vertices,
 				const char* textureFile,
-                int damage
+                int damage, 
+				float SpeedY, 
+				float SpeedX, 
+				float* texcoord
 			);
 
 			//fill obj with default color and 
@@ -18,16 +21,12 @@ namespace CG {
                 int damage
             ); 
 
-			float* getVertices();
-			void setVertices(float* vertices);
-			void applyModelView();
 			int getDamage(); // Getter for damage
 			void setDamage(int damage); // Setter for damage
-
-			Tex2D m_tex;
+			
+			
 
 		private:
-			float* m_vertices;
 			int m_damage; // Added damage attribute
 	};
 }

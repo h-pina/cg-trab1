@@ -31,6 +31,14 @@ namespace CG {
         texCoord[2]=coord[2];
         texCoord[3]=coord[3];
     }
+
+    void Tex2D::defineTexCrop(){
+        glTexCoord2f(texCoord[0], texCoord[2]);
+        glTexCoord2f(texCoord[1], texCoord[2]);
+        glTexCoord2f(texCoord[1], texCoord[3]);
+        glTexCoord2f(texCoord[0], texCoord[3]);
+    }
+
 	float* Tex2D::getTexCrop() { 
 		return texCoord;
 	}

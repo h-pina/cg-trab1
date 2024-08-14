@@ -7,19 +7,15 @@ namespace CG{
         m_damage(damage)
     { }
 
-    Shoot::Shoot(float* vertices, const char* textureFile, int damage)
-        : GameObject(vertices,textureFile), // Call GameObject constructor
+    Shoot::Shoot(float* vertices, const char* textureFile, int damage, float SpeedY, float SpeedX, float* texcoord)
+        : GameObject(vertices,textureFile,SpeedY,SpeedX,texcoord), // Call GameObject constructor
         m_damage(damage)
     { }
 
-	void Shoot::setVertices(float* vertices){
-		m_vertices = vertices;
-	}
+	
 
-	float* Shoot::getVertices(){
-		return m_vertices;
-	}
-
+	
+	
 	int Shoot::getDamage(){
 		return m_damage;
 	}

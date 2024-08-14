@@ -13,8 +13,7 @@ namespace CG {
 				const char* textureFile,
 				float SpeedY, 
 				float SpeedX,
-				float* texcoord,
-				float* pos
+				float* texcoord
 			);
 			void movePlayer(unsigned char key, int x, int y);
 			void frame(int value);

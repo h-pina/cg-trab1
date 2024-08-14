@@ -9,7 +9,7 @@ namespace CG{
 
 			void remapTexCrop(float* coord);
 			float* getTexCrop();
-			
+			void defineTexCrop();
 
 		private:
 			float* texCoord;
