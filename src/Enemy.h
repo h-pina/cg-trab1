@@ -10,9 +10,9 @@
 
 
 namespace CG {
-	class Player: public GameObject {
+	class Enemy: public GameObject {
 		public:
-			Player(
+			Enemy(
 				float* vertices,
 				const char* textureFile,
 				float SpeedY, 
@@ -20,19 +20,17 @@ namespace CG {
 				float* texcoord
 			);
 			
-			void movePlayer(unsigned char key);
+			void moveEnemy(unsigned char key);
 			void disparaProjetil();
 			void atualizaProjeteis();
 			void frame(int value);
 
 
 			void restoreShootPos(Shoot* shoot);
-			// static Player* getInstance();
-			// void startTimer();
 			
 			int mouseButtonState;
 		private:
 			Shoot* m_shoots;
-			Player* instance;
+			
 	};
 }

@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Enemy.h"
 #include "GameObject.h"
 #include <stdio.h>
 #include <math.h>
@@ -9,25 +9,23 @@
 
 namespace CG{
 	
-	// Player* Player::instance = nullptr;
 
-	Player::Player( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
+	Enemy::Enemy( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
 		: GameObject(vertices, textureFile,SpeedY,SpeedX,texcoord)	
 	{ 
 		mouseButtonState = GLUT_UP;
-        float* posPlayer = getPosition();
-        float verticesShoot[4] = { posPlayer[0] - 34.0f / 2, posPlayer[0] + 34.0f / 2, posPlayer[1] - 54.0f / 2, posPlayer[1] + 54.0f / 2 };
+        float* posEnemy = getPosition();
+        float verticesShoot[4] = { posEnemy[0] - 34.0f / 2, posEnemy[0] + 34.0f / 2, posEnemy[1] - 54.0f / 2, posEnemy[1] + 54.0f / 2 };
         float textCoord[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
 
-		float posShoot[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
+		float posShoot[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
         for (int i = 0; i < MAX_SHOOTS; i++) {
-            m_shoots[i] = Shoot(verticesShoot, "../textures/projetilPlayer.png", 5, SpeedY, SpeedX, textCoord);
+            m_shoots[i] = Shoot(verticesShoot, "../textures/projetilEnemy.png", 5, SpeedY, SpeedX, textCoord);
 			restoreShootPos(&m_shoots[i]);
         }
-		// instance = this;
 	}
 
-	void Player::movePlayer(unsigned char key) {
+	void Enemy::moveEnemy(unsigned char key) {
 
 		float* speedGroup =getSpeed();
 		float* texCoordinates = m_tex.getTexCrop(); 
@@ -69,7 +67,7 @@ namespace CG{
 
 
 
-	void Player::disparaProjetil(){
+	void Enemy::disparaProjetil(){
 		for (int i = 0; i < MAX_SHOOTS; ++i) {
 			if (m_shoots[i].getStatus() == 0) {
 				
@@ -78,7 +76,7 @@ namespace CG{
 			}
 		}
 	}
-	void Player::atualizaProjeteis(){
+	void Enemy::atualizaProjeteis(){
 		for (int i = 0; i < MAX_SHOOTS; ++i) {
 			if (m_shoots[i].getStatus() == 1) {
 				float* pos = m_shoots[i].getPosition();
@@ -93,11 +91,11 @@ namespace CG{
 	}
 	
 
-	void Player::frame(int value) {
+	void Enemy::frame(int value) {
         // Get current time in milliseconds
         int now_ms = get_current_milliseconds();
         
-        // Example mouse state check (replace with actual state check)
+        moveEnemy('s');
         printf("miliseg %d\n", now_ms);
         // Check if the left mouse button is pressed and if seconds are even
         if (mouseButtonState == GLUT_DOWN && ((now_ms % 400) < 30)) {
@@ -105,7 +103,6 @@ namespace CG{
         }
         atualizaProjeteis(); // Atualiza a posição dos projéteis
         glutPostRedisplay(); // Redesenha a tela
-        //glutTimerFunc(value, [](int v) { instance->frame(v); }, value); // Define o próximo frame
     }
 	
 	
@@ -122,30 +119,14 @@ namespace CG{
 		return milliseconds;
 	}
 
-	void Player::restoreShootPos(Shoot* shoot)
+	void Enemy::restoreShootPos(Shoot* shoot)
 	{
-		float* posPlayer = getPosition();
+		float* posEnemy = getPosition();
 		float* vertices = getVertices();
-		float posShoot[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
+		float posShoot[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
 		shoot->setPosition(posShoot);
 	}
 
 
-	// Player* Player::getInstance() {
-	// 	if (instance == nullptr) {
-	// 		float* vertices = new float[4]();
-	// 		const char* textureFile = "";
-	// 		float SpeedY = 0.0f;
-	// 		float SpeedX = 0.0f;
-	// 		float* texcoord = new float[4]();
-	// 		instance = new Player(vertices, textureFile, SpeedY, SpeedX, texcoord);
-	// 	}
-	// 	return instance;
-	// }
-	
-	// void Player::startTimer() {
-    //     instance = this;
-    //     glutTimerFunc(16, [](int v) { instance->frame(v); }, 16);
-    // }
 }
 
