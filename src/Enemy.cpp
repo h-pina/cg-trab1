@@ -71,7 +71,7 @@ namespace CG{
 	void Enemy::disparaProjetil(){
 		for (int i = 0; i < MAX_SHOOTS; ++i) {
 			if (m_shoots[i].getStatus() == false) {
-				
+				restoreShootPos(&m_shoots[i]);
 				m_shoots[i].setStatus(true);
 				break;
 			}

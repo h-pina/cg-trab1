@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace CG {
-	Scene::Scene(Window* window) {
+	Scene::Scene(Window* window, int lvl_id) {
 		//Create Player
 		float playerVertices[] = {
 			150.0f,150.0f,
@@ -14,6 +14,7 @@ namespace CG {
 			-150.0f,-150.0f,
 			-150.0f,150.0f,
 		};
+		lvl_cfgs = Level(lvl_id);
 		m_player = std::make_shared<Player>(
 			playerVertices,"avioes.png"
 		);
@@ -27,6 +28,7 @@ namespace CG {
 		std::shared_ptr<GameObject> bg = std::make_shared<GameObject>(
 			bgVertices
 		);
+		
 		m_sceneObjects.push_back(bg);
 		m_sceneObjects.push_back(m_player);
 	}

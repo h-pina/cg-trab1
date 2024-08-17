@@ -6,18 +6,21 @@
 namespace CG {
     class Level {
         public:
-            Level(Player* player);
-            ~Level();
+            Level(int id);
+            Level() = default; 
+            
 
-            void Update();
-            void Render();
-
-            void AddEnemy(Enemy* enemy);
-            void RemoveEnemy(Enemy* enemy);
+           
 
         private:
-            Player* m_player;
-            std::vector<Enemy*> m_enemies;
+            int m_id;
+            int n_enemys;
+            int total_enemys;
+            int enemys_base_hp;
+            int enemys_base_damage;
+            int player_hp;
+            int player_damage;
+            
     };
 
 }
