@@ -10,9 +10,10 @@
 namespace CG{
 	
 
-	Enemy::Enemy( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
-		: GameObject(vertices, textureFile,SpeedY,SpeedX,texcoord)	
+	Enemy::Enemy( float* vertices, int health, const char* textureFile,float SpeedY, float SpeedX, float* texcoord, int damage)
+		: GameObject(vertices, health, textureFile,SpeedY,SpeedX,texcoord)	
 	{ 
+		
 		mouseButtonState = GLUT_UP;
         float* posEnemy = getPosition();
         float verticesShoot[4] = { posEnemy[0] - 34.0f / 2, posEnemy[0] + 34.0f / 2, posEnemy[1] - 54.0f / 2, posEnemy[1] + 54.0f / 2 };
@@ -20,7 +21,7 @@ namespace CG{
 
 		float posShoot[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
         for (int i = 0; i < MAX_SHOOTS; i++) {
-            m_shoots[i] = Shoot(verticesShoot, "../textures/projetilEnemy.png", 5, SpeedY, SpeedX, textCoord);
+            m_shoots[i] = Shoot(verticesShoot, damage, "../textures/projetilEnemy.png", 5, SpeedY, SpeedX, textCoord);
 			restoreShootPos(&m_shoots[i]);
         }
 	}
@@ -69,21 +70,21 @@ namespace CG{
 
 	void Enemy::disparaProjetil(){
 		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == 0) {
+			if (m_shoots[i].getStatus() == false) {
 				
-				m_shoots[i].changeStatus();
+				m_shoots[i].setStatus(true);
 				break;
 			}
 		}
 	}
 	void Enemy::atualizaProjeteis(){
 		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == 1) {
+			if (m_shoots[i].getStatus() == true) {
 				float* pos = m_shoots[i].getPosition();
 				pos[1] += m_shoots[i].getSpeed()[1];
 				m_shoots[i].setPosition(pos);
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
-					m_shoots[i].changeStatus();
+					m_shoots[i].setStatus(false);
 					restoreShootPos(&m_shoots[i]);
 				}
 			}

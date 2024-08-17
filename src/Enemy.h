@@ -14,23 +14,26 @@ namespace CG {
 		public:
 			Enemy(
 				float* vertices,
+				int health,
 				const char* textureFile,
 				float SpeedY, 
 				float SpeedX,
-				float* texcoord
+				float* texcoord,
+				int damage
 			);
 			
 			void moveEnemy(unsigned char key);
 			void disparaProjetil();
 			void atualizaProjeteis();
 			void frame(int value);
-
+			
 
 			void restoreShootPos(Shoot* shoot);
 			
 			int mouseButtonState;
 		private:
 			Shoot* m_shoots;
+			
 			
 	};
 }

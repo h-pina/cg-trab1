@@ -7,6 +7,7 @@ namespace CG {
 
 			Shoot(
 				float* vertices,
+				int health,
 				const char* textureFile,
                 int damage, 
 				float SpeedY, 
@@ -14,21 +15,14 @@ namespace CG {
 				float* texcoord
 			);
 
-			//fill obj with default color and 
-			//create at center
-			Shoot(
-                float* vertices,
-                int damage
-            ); 
-
-			int getDamage(); // Getter for damage
-			void setDamage(int damage); // Setter for damage
-			int getStatus();
-			void changeStatus();
 			
 
+			
+			void detectColision(GameObject* obj);
+
 		private:
-			int m_damage; // Added damage attribute
-			int m_active;
+			
+			
+			
 	};
 }

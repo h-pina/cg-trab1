@@ -2,40 +2,26 @@
 #include <GL/gl.h>
 
 namespace CG{
-	Shoot::Shoot(float* vertices, int damage)
-        : GameObject(vertices), // Call GameObject constructor
-        m_damage(damage)
+	
+
+    Shoot::Shoot(float* vertices, int health, const char* textureFile, int damage, float SpeedY, float SpeedX, float* texcoord)
+        : GameObject(vertices,health,textureFile,SpeedY,SpeedX,texcoord) // Call GameObject constructor
+        
     { }
 
-    Shoot::Shoot(float* vertices, const char* textureFile, int damage, float SpeedY, float SpeedX, float* texcoord)
-        : GameObject(vertices,textureFile,SpeedY,SpeedX,texcoord), // Call GameObject constructor
-        m_damage(damage),
-        m_active(int(0))
-    { }
-
-	
-
-	
-	
-	int Shoot::getDamage(){
-		return m_damage;
-	}
-
-	void Shoot::setDamage(int damage){
-		m_damage = damage;
-	}
-
-    int Shoot::getStatus()
-    {
-        return m_active;
-    }
-
-    void Shoot::changeStatus()
-    {
-        if(m_active == 0){
-            m_active = 1;
-        }else{
-            m_active = 0;
+	void Shoot::detectColision(GameObject* obj){
+        float* objPos = (*obj).getPosition();
+        float* objVertices = (*obj).getVertices();
+        float* shootPos = this->getPosition();
+        float* shootVertices = this->getVertices();
+        if(shootPos[0] > objPos[0] && shootPos[0] < objPos[0] + objVertices[0]){
+            if(shootPos[1] > objPos[1] && shootPos[1] < objPos[1] + objVertices[1]){
+                this->setStatus(false);
+                (*obj).setHealth((*obj).getHealth() - this->getHealth());
+            }
         }
     }
+     
+
+    
 }

@@ -14,10 +14,12 @@ namespace CG {
 		public:
 			Player(
 				float* vertices,
+				int healthP,
 				const char* textureFile,
 				float SpeedY, 
 				float SpeedX,
-				float* texcoord
+				float* texcoord,
+				int damage
 			);
 			
 			void movePlayer(unsigned char key);

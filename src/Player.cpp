@@ -11,17 +11,18 @@ namespace CG{
 	
 	// Player* Player::instance = nullptr;
 
-	Player::Player( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
-		: GameObject(vertices, textureFile,SpeedY,SpeedX,texcoord)	
+	Player::Player( float* vertices, int healthP, const char* textureFile,float SpeedY, float SpeedX, float* texcoord, int damage)
+		: GameObject(vertices, healthP, textureFile,SpeedY,SpeedX,texcoord)	
 	{ 
 		mouseButtonState = GLUT_UP;
+
         float* posPlayer = getPosition();
         float verticesShoot[4] = { posPlayer[0] - 34.0f / 2, posPlayer[0] + 34.0f / 2, posPlayer[1] - 54.0f / 2, posPlayer[1] + 54.0f / 2 };
         float textCoord[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
 
 		float posShoot[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
         for (int i = 0; i < MAX_SHOOTS; i++) {
-            m_shoots[i] = Shoot(verticesShoot, "../textures/projetilPlayer.png", 5, SpeedY, SpeedX, textCoord);
+            m_shoots[i] = Shoot(verticesShoot,damage, "../textures/projetilPlayer.png", 5, SpeedY, SpeedX, textCoord);
 			restoreShootPos(&m_shoots[i]);
         }
 		// instance = this;
@@ -71,21 +72,21 @@ namespace CG{
 
 	void Player::disparaProjetil(){
 		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == 0) {
+			if (m_shoots[i].getStatus() == false) {
 				
-				m_shoots[i].changeStatus();
+				m_shoots[i].setStatus(true);
 				break;
 			}
 		}
 	}
 	void Player::atualizaProjeteis(){
 		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == 1) {
+			if (m_shoots[i].getStatus() == true) {
 				float* pos = m_shoots[i].getPosition();
 				pos[1] += m_shoots[i].getSpeed()[1];
 				m_shoots[i].setPosition(pos);
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
-					m_shoots[i].changeStatus();
+					m_shoots[i].setStatus(false);
 					restoreShootPos(&m_shoots[i]);
 				}
 			}
