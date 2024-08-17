@@ -30,4 +30,26 @@ namespace CG {
             player_damage = 2;
         }
     }
+
+    int Level::getNEnemys() {
+        return n_enemys;
+    }
+
+    int Level::getTotalEnemys(){
+        return total_enemys;
+    }
+
+    int Level::getEnemysBaseHP(){
+        return enemys_base_hp;
+    }
+    int Level::getEnemysBaseDamage(){
+        return enemys_base_damage;
+    }
+    int Level::getPlayerHP(){
+        return player_hp;
+    }
+    int Level::getPlayerDamage(){
+        return player_damage;
+    }
+    
 }
