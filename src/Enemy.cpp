@@ -16,13 +16,13 @@ namespace CG{
 		
 		mouseButtonState = GLUT_UP;
         float* posEnemy = getPosition();
-        float verticesShoot[4] = { posEnemy[0] - 34.0f / 2, posEnemy[0] + 34.0f / 2, posEnemy[1] - 54.0f / 2, posEnemy[1] + 54.0f / 2 };
+        float verticesBullet[4] = { posEnemy[0] - 34.0f / 2, posEnemy[0] + 34.0f / 2, posEnemy[1] - 54.0f / 2, posEnemy[1] + 54.0f / 2 };
         float textCoord[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-
-		float posShoot[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
-        for (int i = 0; i < MAX_SHOOTS; i++) {
-            m_shoots[i] = Shoot(verticesShoot, damage, "../textures/projetilEnemy.png", 5, SpeedY, SpeedX, textCoord);
-			restoreShootPos(&m_shoots[i]);
+		setStatus(false);
+		float posBullet[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
+        for (int i = 0; i < MAX_BulletS; i++) {
+            m_Bullets[i] = Bullet(verticesBullet, damage, "../textures/projetilEnemy.png", SpeedY, SpeedX, textCoord);
+			restoreBulletPos(&m_Bullets[i]);
         }
 	}
 
@@ -69,37 +69,37 @@ namespace CG{
 
 
 	void Enemy::disparaProjetil(){
-		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == false) {
-				restoreShootPos(&m_shoots[i]);
-				m_shoots[i].setStatus(true);
+		for (int i = 0; i < MAX_BulletS; ++i) {
+			if (m_Bullets[i].getStatus() == false) {
+				restoreBulletPos(&m_Bullets[i]);
+				m_Bullets[i].setStatus(true);
 				break;
 			}
 		}
 	}
 	void Enemy::atualizaProjeteis(){
-		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == true) {
-				float* pos = m_shoots[i].getPosition();
-				pos[1] += m_shoots[i].getSpeed()[1];
-				m_shoots[i].setPosition(pos);
+		for (int i = 0; i < MAX_BulletS; ++i) {
+			if (m_Bullets[i].getStatus() == true) {
+				float* pos = m_Bullets[i].getPosition();
+				pos[1] += m_Bullets[i].getSpeed()[1];
+				m_Bullets[i].setPosition(pos);
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
-					m_shoots[i].setStatus(false);
-					restoreShootPos(&m_shoots[i]);
+					m_Bullets[i].setStatus(false);
+					restoreBulletPos(&m_Bullets[i]);
 				}
 			}
 		}
 	}
 	
 
-	void Enemy::frame(int value) {
+	void Enemy::controlaDisparos() {
         // Get current time in milliseconds
         int now_ms = get_current_milliseconds();
         
         moveEnemy('s');
         printf("miliseg %d\n", now_ms);
         // Check if the left mouse button is pressed and if seconds are even
-        if (mouseButtonState == GLUT_DOWN && ((now_ms % 400) < 30)) {
+        if (mouseButtonState == GLUT_DOWN && ((now_ms % 500) < 5)) {
             disparaProjetil(); // Dispara o projétil a partir da posição atual do avião
         }
         atualizaProjeteis(); // Atualiza a posição dos projéteis
@@ -120,12 +120,12 @@ namespace CG{
 		return milliseconds;
 	}
 
-	void Enemy::restoreShootPos(Shoot* shoot)
+	void Enemy::restoreBulletPos(Bullet* Bullet)
 	{
 		float* posEnemy = getPosition();
 		float* vertices = getVertices();
-		float posShoot[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
-		shoot->setPosition(posShoot);
+		float posBullet[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
+		Bullet->setPosition(posBullet);
 	}
 
 

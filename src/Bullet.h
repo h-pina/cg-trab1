@@ -2,14 +2,13 @@
 #include "GameObject.h"
 
 namespace CG {
-	class Shoot : public GameObject { // Added 'public' keyword
+	class Bullet : public GameObject { // Added 'public' keyword
 		public:
 
-			Shoot(
+			Bullet(
 				float* vertices,
 				int health,
-				const char* textureFile,
-                int damage, 
+				const char* textureFile, 
 				float SpeedY, 
 				float SpeedX, 
 				float* texcoord

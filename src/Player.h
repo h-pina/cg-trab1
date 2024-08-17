@@ -1,12 +1,12 @@
 #pragma once
 #include "GameObject.h"
-#include "Shoot.h"
+#include "Bullet.h"
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
 #include <sys/time.h>
 
-#define MAX_SHOOTS 5
+#define MAX_BulletS 5
 
 
 namespace CG {
@@ -25,16 +25,14 @@ namespace CG {
 			void movePlayer(unsigned char key);
 			void disparaProjetil();
 			void atualizaProjeteis();
-			void frame(int value);
+			void controlaDisparos();
 
 
-			void restoreShootPos(Shoot* shoot);
-			// static Player* getInstance();
-			// void startTimer();
+			void restoreBulletPos(Bullet* Bullet);
+			
 			
 			int mouseButtonState;
 		private:
-			Shoot* m_shoots;
-			Player* instance;
+			Bullet* m_Bullets;
 	};
 }

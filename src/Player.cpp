@@ -17,13 +17,13 @@ namespace CG{
 		mouseButtonState = GLUT_UP;
 
         float* posPlayer = getPosition();
-        float verticesShoot[4] = { posPlayer[0] - 34.0f / 2, posPlayer[0] + 34.0f / 2, posPlayer[1] - 54.0f / 2, posPlayer[1] + 54.0f / 2 };
+        float verticesBullet[4] = { posPlayer[0] - 34.0f / 2, posPlayer[0] + 34.0f / 2, posPlayer[1] - 54.0f / 2, posPlayer[1] + 54.0f / 2 };
         float textCoord[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
 
-		float posShoot[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
-        for (int i = 0; i < MAX_SHOOTS; i++) {
-            m_shoots[i] = Shoot(verticesShoot,damage, "../textures/projetilPlayer.png", 5, SpeedY, SpeedX, textCoord);
-			restoreShootPos(&m_shoots[i]);
+		float posBullet[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
+        for (int i = 0; i < MAX_BulletS; i++) {
+            m_Bullets[i] = Bullet(verticesBullet,damage, "../textures/projetilPlayer.png", SpeedY, SpeedX, textCoord);
+			restoreBulletPos(&m_Bullets[i]);
         }
 		// instance = this;
 	}
@@ -71,42 +71,42 @@ namespace CG{
 
 
 	void Player::disparaProjetil(){
-		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == false) {
-				restoreShootPos(&m_shoots[i]);
-				m_shoots[i].setStatus(true);
+		for (int i = 0; i < MAX_BulletS; ++i) {
+			if (m_Bullets[i].getStatus() == false) {
+				restoreBulletPos(&m_Bullets[i]);
+				m_Bullets[i].setStatus(true);
 				break;
 			}
 		}
 	}
 	void Player::atualizaProjeteis(){
-		for (int i = 0; i < MAX_SHOOTS; ++i) {
-			if (m_shoots[i].getStatus() == true) {
-				float* pos = m_shoots[i].getPosition();
-				pos[1] += m_shoots[i].getSpeed()[1];
-				m_shoots[i].setPosition(pos);
+		for (int i = 0; i < MAX_BulletS; ++i) {
+			if (m_Bullets[i].getStatus() == true) {
+				float* pos = m_Bullets[i].getPosition();
+				pos[1] += m_Bullets[i].getSpeed()[1];
+				m_Bullets[i].setPosition(pos);
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
-					m_shoots[i].setStatus(false);
-					restoreShootPos(&m_shoots[i]);
+					m_Bullets[i].setStatus(false);
+					restoreBulletPos(&m_Bullets[i]);
 				}
 			}
 		}
 	}
 	
 
-	void Player::frame(int value) {
+	void Player::controlaDisparos() {
         // Get current time in milliseconds
         int now_ms = get_current_milliseconds();
         
         // Example mouse state check (replace with actual state check)
         printf("miliseg %d\n", now_ms);
         // Check if the left mouse button is pressed and if seconds are even
-        if (mouseButtonState == GLUT_DOWN && ((now_ms % 400) < 30)) {
+        if (mouseButtonState == GLUT_DOWN && ((now_ms % 500) < 5)) {
             disparaProjetil(); // Dispara o projétil a partir da posição atual do avião
         }
         atualizaProjeteis(); // Atualiza a posição dos projéteis
         glutPostRedisplay(); // Redesenha a tela
-        //glutTimerFunc(value, [](int v) { instance->frame(v); }, value); // Define o próximo frame
+        
     }
 	
 	
@@ -123,30 +123,30 @@ namespace CG{
 		return milliseconds;
 	}
 
-	void Player::restoreShootPos(Shoot* shoot)
+	void Player::restoreBulletPos(Bullet* Bullet)
 	{
 		float* posPlayer = getPosition();
 		float* vertices = getVertices();
-		float posShoot[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
-		shoot->setPosition(posShoot);
+		float posBullet[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
+		Bullet->setPosition(posBullet);
 	}
 
 
-	// Player* Player::getInstance() {
-	// 	if (instance == nullptr) {
-	// 		float* vertices = new float[4]();
-	// 		const char* textureFile = "";
-	// 		float SpeedY = 0.0f;
-	// 		float SpeedX = 0.0f;
-	// 		float* texcoord = new float[4]();
-	// 		instance = new Player(vertices, textureFile, SpeedY, SpeedX, texcoord);
-	// 	}
-	// 	return instance;
-	// }
+// 	Player* Player::getInstance() {
+// 		if (instance == nullptr) {
+// 			float* vertices = new float[4]();
+// 			const char* textureFile = "";
+// 			float SpeedY = 0.0f;
+// 			float SpeedX = 0.0f;
+// 			float* texcoord = new float[4]();
+// 			instance = new Player(vertices, textureFile, SpeedY, SpeedX, texcoord);
+// 		}
+// 		return instance;
+// 	}
 	
-	// void Player::startTimer() {
-    //     instance = this;
-    //     glutTimerFunc(16, [](int v) { instance->frame(v); }, 16);
-    // }
-}
+// 	void Player::startTimer() {
+//         instance = this;
+//         glutTimerFunc(16, [](int v) { instance->frame(v); }, 16);
+//     }
+// }
 
