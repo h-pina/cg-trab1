@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Primitives.h"
 
 namespace CG {
 	class Bullet : public GameObject { // Added 'public' keyword
@@ -16,12 +17,11 @@ namespace CG {
 
 			
 
-			
-			void detectColision(GameObject* obj);
-
 		private:
 			
 			
 			
 	};
+
+	int detectColision(Bullet* bul, GameObject* obj);
 }

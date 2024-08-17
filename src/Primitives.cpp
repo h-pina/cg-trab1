@@ -1,6 +1,7 @@
 #include "GL/freeglut.h"
 #include "Primitives.h"
-
+#include <sys/time.h>
+#include <time.h>
 #include "math.h"
 #include <GL/gl.h>
 #include <cmath>
@@ -42,5 +43,17 @@ namespace CG {
 				}
 			glEnd();
 		}
+	}
+
+	int get_current_milliseconds() {
+		struct timeval tv;
+		gettimeofday(&tv, NULL);
+		int milliseconds = (tv.tv_usec / 1000) % 1000;
+		return milliseconds;
+	}
+	int get_current_seconds() {
+		struct timeval tv;
+		gettimeofday(&tv, NULL);
+		return tv.tv_sec ;
 	}
 }

@@ -111,18 +111,18 @@ namespace CG{
 	
 	
 
+	Bullet* Player::getBullets()
+	{
+		return m_Bullets;
+	}
+
+
 	
 
 // @@@@@@@@@@@@@@@@@@@@ 	Auxiliar 	@@@@@@@@@@@@@@@@@@@@
 
 
-	int get_current_milliseconds() {
-		struct timeval tv;
-		gettimeofday(&tv, NULL);
-		int milliseconds = (tv.tv_usec / 1000) % 1000;
-		return milliseconds;
-	}
-
+	
 	void Player::restoreBulletPos(Bullet* Bullet)
 	{
 		float* posPlayer = getPosition();
@@ -131,22 +131,5 @@ namespace CG{
 		Bullet->setPosition(posBullet);
 	}
 
-
-// 	Player* Player::getInstance() {
-// 		if (instance == nullptr) {
-// 			float* vertices = new float[4]();
-// 			const char* textureFile = "";
-// 			float SpeedY = 0.0f;
-// 			float SpeedX = 0.0f;
-// 			float* texcoord = new float[4]();
-// 			instance = new Player(vertices, textureFile, SpeedY, SpeedX, texcoord);
-// 		}
-// 		return instance;
-// 	}
-	
-// 	void Player::startTimer() {
-//         instance = this;
-//         glutTimerFunc(16, [](int v) { instance->frame(v); }, 16);
-//     }
-// }
+}
 

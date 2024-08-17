@@ -9,15 +9,20 @@ namespace CG{
         
     { }
 
-	void Bullet::detectColision(GameObject* obj){
+	int detectColision(Bullet* bul,GameObject* obj){
         float* objPos = (*obj).getPosition();
         float* objVertices = (*obj).getVertices();
-        float* BulletPos = this->getPosition();
-        float* BulletVertices = this->getVertices();
+        float* BulletPos = bul->getPosition();
+        float* BulletVertices = bul->getVertices();
         if(BulletPos[0] > objPos[0] && BulletPos[0] < objPos[0] + objVertices[0]){
             if(BulletPos[1] > objPos[1] && BulletPos[1] < objPos[1] + objVertices[1]){
-                this->setStatus(false);
-                (*obj).setHealth((*obj).getHealth() - this->getHealth());
+                bul->setStatus(false);
+                (*obj).setHealth((*obj).getHealth() - bul->getHealth());
+                if((*obj).getStatus() == false){
+                    return (*obj).getHealth();
+                }else{
+                    return 0;
+                }
             }
         }
     }

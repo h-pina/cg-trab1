@@ -6,6 +6,7 @@
 #include <time.h>
 #include <sys/time.h>
 
+
 #define MAX_BulletS 5
 
 
@@ -26,6 +27,7 @@ namespace CG {
 			void disparaProjetil();
 			void atualizaProjeteis();
 			void controlaDisparos();
+			Bullet* getBullets();
 			
 
 			void restoreBulletPos(Bullet* Bullet);

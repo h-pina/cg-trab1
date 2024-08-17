@@ -6,6 +6,7 @@
 #include <time.h>
 #include <sys/time.h>
 
+
 #define MAX_BulletS 5
 
 
@@ -30,7 +31,9 @@ namespace CG {
 
 			void restoreBulletPos(Bullet* Bullet);
 			
-			
+			Bullet* getBullets();
+
+
 			int mouseButtonState;
 		private:
 			Bullet* m_Bullets;

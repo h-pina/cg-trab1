@@ -9,6 +9,8 @@ namespace CG {
             Level(int id);
             Level() = default; 
             
+            void npcController(std::vector<std::shared_ptr<Enemy>> EnemyList);
+
             int getNEnemys();
             int getTotalEnemys();
             int getEnemysBaseHP();
@@ -16,7 +18,8 @@ namespace CG {
             int getPlayerHP();
             int getPlayerDamage();
             int getID();
-
+            
+            
            
         private:
             int m_id;
@@ -26,6 +29,7 @@ namespace CG {
             int enemys_base_damage;
             int player_hp;
             int player_damage;
+            int Timer;
             
     };
 

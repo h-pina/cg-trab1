@@ -1,4 +1,5 @@
 #include "Level.h"
+#include <memory>
 
 namespace CG {
     Level::Level(int id) {
@@ -29,6 +30,23 @@ namespace CG {
             player_hp = 12;
             player_damage = 2;
         }
+        Timer = -1;
+    }
+
+    void Level::npcController(std::vector<std::shared_ptr<Enemy>> EnemyList) {
+        int secClock = get_current_seconds();
+        if(((secClock % 3) == 0) && ((secClock/3)!=Timer)){
+            Timer = secClock/3;
+            for (int i = 0; i < n_enemys; i++) {
+                if(EnemyList[i]->getStatus()==false){
+                    //Exibe um novo inimigo                    
+                }
+                else{
+                    EnemyList[i]->moveEnemy('s');
+                }
+            }
+        }
+
     }
 
     int Level::getNEnemys() {

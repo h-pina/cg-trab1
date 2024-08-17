@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Window.h"
 #include "Level.h"
+#include "Primitives.h"
 
 #include <memory>
 #include <vector>

@@ -83,6 +83,7 @@ namespace CG{
 				float* pos = m_Bullets[i].getPosition();
 				pos[1] += m_Bullets[i].getSpeed()[1];
 				m_Bullets[i].setPosition(pos);
+				
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
 					m_Bullets[i].setStatus(false);
 					restoreBulletPos(&m_Bullets[i]);
@@ -96,7 +97,7 @@ namespace CG{
         // Get current time in milliseconds
         int now_ms = get_current_milliseconds();
         
-        moveEnemy('s');
+        
         printf("miliseg %d\n", now_ms);
         // Check if the left mouse button is pressed and if seconds are even
         if (mouseButtonState == GLUT_DOWN && ((now_ms % 500) < 5)) {
@@ -108,17 +109,16 @@ namespace CG{
 	
 	
 
+	Bullet* Enemy::getBullets()
+	{
+		return m_Bullets;
+	}
+
 	
 
 // @@@@@@@@@@@@@@@@@@@@ 	Auxiliar 	@@@@@@@@@@@@@@@@@@@@
 
 
-	int get_current_milliseconds() {
-		struct timeval tv;
-		gettimeofday(&tv, NULL);
-		int milliseconds = (tv.tv_usec / 1000) % 1000;
-		return milliseconds;
-	}
 
 	void Enemy::restoreBulletPos(Bullet* Bullet)
 	{

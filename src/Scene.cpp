@@ -1,5 +1,5 @@
-#include "GameObject.h"
 #include "Player.h"
+#include "Bullet.h"
 #include "Scene.h"
 #include "Window.h"
 #include <memory>
@@ -39,11 +39,40 @@ namespace CG {
 	}
 
 	int Scene::updateFrame(int value){
-		//Update Player
-		m_player->controlaDisparos();
+		int points = 0;
+
+		//Update Enemy's Shoots, moves and spawn
+		lvl_cfgs.npcController(m_sceneEnemys);
+
+		//Detect colision between Enemy bullets and Player
 		for (size_t i = 0; i < m_sceneEnemys.size(); ++i) {
 			m_sceneEnemys[i]->controlaDisparos();
+			Bullet* e_bul = m_sceneEnemys[i]->getBullets();
+			for(int j = 0; j < MAX_BulletS;j++){
+				int lose = detectColision(e_bul,m_player.get());
+				if(lose == 0)
+				{
+					//MOrreu o player
+				}
+			}
 		}
+
+		//Hit controller
+
+		m_player->controlaDisparos();
+		Bullet* p_bul = m_player->getBullets();
+		
+		//Detect colision between PLayer bullets and any Enemy
+		for(int i = 0; i < MAX_BulletS;i++){
+
+			for (size_t j = 0; j < m_sceneEnemys.size(); ++j) {
+				points+=detectColision(p_bul,m_sceneEnemys[j].get());
+			}
+			
+		}
+		
+		//Definir função para add pontos @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 		glutTimerFunc(value, [](int v) { instance->updateFrame(v); }, value); // Define o próximo frame
 	}
 
