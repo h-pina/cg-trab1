@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <memory>
+#include <vector>
+#include <iostream>
 #include <sys/time.h>
 
 
@@ -29,13 +32,12 @@ namespace CG {
 			void controlaDisparos();
 
 
-			void restoreBulletPos(Bullet* Bullet);
+			void restoreBulletPos(std::shared_ptr<Bullet> bullet);
 			
-			Bullet* getBullets();
-
+			std::vector<std::shared_ptr<Bullet>> getBullets();
 
 			int mouseButtonState;
 		private:
-			Bullet* m_Bullets;
+			std::vector<std::shared_ptr<Bullet>> m_Bullets;
 	};
 }

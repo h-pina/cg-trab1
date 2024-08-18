@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include <GL/gl.h>
+#include <iostream>
 
 namespace CG{
 	
@@ -7,7 +8,9 @@ namespace CG{
     Bullet::Bullet(float* vertices,int health, const char* textureFile, float SpeedY, float SpeedX, float* texcoord)
         : GameObject(vertices,health,textureFile,SpeedY,SpeedX,texcoord) // Call GameObject constructor
         
-    { }
+    { 
+        
+    }
 
 	int detectColision(Bullet* bul,GameObject* obj){
         float* objPos = (*obj).getPosition();
@@ -25,6 +28,7 @@ namespace CG{
                 }
             }
         }
+        return 0;
     }
      
 

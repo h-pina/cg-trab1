@@ -5,7 +5,7 @@
 #include "Bullet.h"
 #include "Window.h"
 #include "Level.h"
-#include "Primitives.h"
+
 
 #include <memory>
 #include <vector>
@@ -16,8 +16,8 @@ namespace CG {
 			Scene(Window* window, int lvl_id);
 			std::shared_ptr<Player> getPlayer();
 			std::vector<std::shared_ptr<Enemy>> getSceneObjects();
-			int updateFrame(int value);
-
+			void updateFrame(int value);
+			
 			Scene* getInstance();
 			void startTimer();
 

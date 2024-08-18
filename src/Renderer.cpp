@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include "GameObject.h"
-#include "Primitives.h"
+
 
 #include <GL/freeglut.h>
 #include <GL/gl.h>
@@ -28,25 +28,31 @@ namespace CG {
 
 
 	void Renderer::render(){
-		glClearColor(0.7, 0.7, 0.7, 1);
+		glClearColor(1, 0.7, 0.7, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		std::shared_ptr<GameObject> player = m_scene->getPlayer();
+		
+		player->draw();
 		for(std::shared_ptr<GameObject> go : m_scene->getSceneObjects()){
-			go->m_tex.use();	
-			glPushMatrix();
-				go->applyModelView();
-				glBegin(GL_TRIANGLE_FAN);
-					float* goVertices = go->getVertices();
-					drawVertices(goVertices, 8, 0);
-					float texVertices[] = {
-						0, 0,
-						100, 0,
-						100, 100,
-						0, 100,
-					};
-					drawVertices(texVertices, 8, 1);
-				glEnd();
-			glPopMatrix();
+		
+			
+		
+		// 	go->m_tex.use();	
+		// 	glPushMatrix();
+		// 		go->applyModelView();
+		// 		glBegin(GL_TRIANGLE_FAN);
+		// 			float* goVertices = go->getVertices();
+		// 			drawVertices(goVertices, 8, 0);
+		// 			float texVertices[] = {
+		// 				0, 0,
+		// 				100, 0,
+		// 				100, 100,
+		// 				0, 100,
+		// 			};
+		// 			drawVertices(texVertices, 8, 1);
+		// 		glEnd();
+		// 	glPopMatrix();
 		}
 		glutSwapBuffers();
 	}

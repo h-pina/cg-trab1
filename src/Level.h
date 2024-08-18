@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <vector>
+#include <memory>
 namespace CG {
     class Level {
         public:

@@ -21,8 +21,11 @@ namespace CG{
 		setStatus(false);
 		float posBullet[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
         for (int i = 0; i < MAX_BulletS; i++) {
-            m_Bullets[i] = Bullet(verticesBullet, damage, "../textures/projetilEnemy.png", SpeedY, SpeedX, textCoord);
-			restoreBulletPos(&m_Bullets[i]);
+
+			std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilEnemy.png", SpeedY, SpeedX, textCoord);
+
+            m_Bullets.push_back(bullet);
+			restoreBulletPos(m_Bullets[i]);
         }
 	}
 
@@ -70,23 +73,23 @@ namespace CG{
 
 	void Enemy::disparaProjetil(){
 		for (int i = 0; i < MAX_BulletS; ++i) {
-			if (m_Bullets[i].getStatus() == false) {
-				restoreBulletPos(&m_Bullets[i]);
-				m_Bullets[i].setStatus(true);
+			if (m_Bullets[i]->getStatus() == false) {
+				restoreBulletPos(m_Bullets[i]);
+				m_Bullets[i]->setStatus(true);
 				break;
 			}
 		}
 	}
 	void Enemy::atualizaProjeteis(){
 		for (int i = 0; i < MAX_BulletS; ++i) {
-			if (m_Bullets[i].getStatus() == true) {
-				float* pos = m_Bullets[i].getPosition();
-				pos[1] += m_Bullets[i].getSpeed()[1];
-				m_Bullets[i].setPosition(pos);
+			if (m_Bullets[i]->getStatus() == true) {
+				float* pos = m_Bullets[i]->getPosition();
+				pos[1] += m_Bullets[i]->getSpeed()[1];
+				m_Bullets[i]->setPosition(pos);
 				
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
-					m_Bullets[i].setStatus(false);
-					restoreBulletPos(&m_Bullets[i]);
+					m_Bullets[i]->setStatus(false);
+					restoreBulletPos(m_Bullets[i]);
 				}
 			}
 		}
@@ -109,7 +112,7 @@ namespace CG{
 	
 	
 
-	Bullet* Enemy::getBullets()
+	std::vector<std::shared_ptr<Bullet>> Enemy::getBullets()
 	{
 		return m_Bullets;
 	}
@@ -120,12 +123,12 @@ namespace CG{
 
 
 
-	void Enemy::restoreBulletPos(Bullet* Bullet)
+	void Enemy::restoreBulletPos(std::shared_ptr<Bullet> bullet)
 	{
 		float* posEnemy = getPosition();
 		float* vertices = getVertices();
-		float posBullet[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
-		Bullet->setPosition(posBullet);
+		float posBullet[] = {posEnemy[0], posEnemy[1] + vertices[3] - vertices[2]};
+		bullet->setPosition(posBullet);
 	}
 
 

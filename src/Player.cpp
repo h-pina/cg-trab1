@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <iostream>
 #include <sys/time.h>
 #include <vector>
 
@@ -14,6 +15,7 @@ namespace CG{
 	Player::Player( float* vertices, int healthP, const char* textureFile,float SpeedY, float SpeedX, float* texcoord, int damage)
 		: GameObject(vertices, healthP, textureFile,SpeedY,SpeedX,texcoord)	
 	{ 
+		
 		mouseButtonState = GLUT_UP;
 
         float* posPlayer = getPosition();
@@ -22,8 +24,10 @@ namespace CG{
 
 		float posBullet[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
         for (int i = 0; i < MAX_BulletS; i++) {
-            m_Bullets[i] = Bullet(verticesBullet,damage, "../textures/projetilPlayer.png", SpeedY, SpeedX, textCoord);
-			restoreBulletPos(&m_Bullets[i]);
+            std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilEnemy.png", SpeedY, SpeedX, textCoord);
+
+            m_Bullets.push_back(bullet);
+			restoreBulletPos(m_Bullets[i]);
         }
 		// instance = this;
 	}
@@ -72,22 +76,22 @@ namespace CG{
 
 	void Player::disparaProjetil(){
 		for (int i = 0; i < MAX_BulletS; ++i) {
-			if (m_Bullets[i].getStatus() == false) {
-				restoreBulletPos(&m_Bullets[i]);
-				m_Bullets[i].setStatus(true);
+			if (m_Bullets[i]->getStatus() == false) {
+				restoreBulletPos(m_Bullets[i]);
+				m_Bullets[i]->setStatus(true);
 				break;
 			}
 		}
 	}
 	void Player::atualizaProjeteis(){
 		for (int i = 0; i < MAX_BulletS; ++i) {
-			if (m_Bullets[i].getStatus() == true) {
-				float* pos = m_Bullets[i].getPosition();
-				pos[1] += m_Bullets[i].getSpeed()[1];
-				m_Bullets[i].setPosition(pos);
+			if (m_Bullets[i]->getStatus() == true) {
+				float* pos = m_Bullets[i]->getPosition();
+				pos[1] += m_Bullets[i]->getSpeed()[1];
+				m_Bullets[i]->setPosition(pos);
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
-					m_Bullets[i].setStatus(false);
-					restoreBulletPos(&m_Bullets[i]);
+					m_Bullets[i]->setStatus(false);
+					restoreBulletPos(m_Bullets[i]);
 				}
 			}
 		}
@@ -111,7 +115,7 @@ namespace CG{
 	
 	
 
-	Bullet* Player::getBullets()
+	std::vector<std::shared_ptr<Bullet>> Player::getBullets()
 	{
 		return m_Bullets;
 	}
@@ -123,13 +127,14 @@ namespace CG{
 
 
 	
-	void Player::restoreBulletPos(Bullet* Bullet)
+	void Player::restoreBulletPos(std::shared_ptr<Bullet> bullet)
 	{
-		float* posPlayer = getPosition();
+		float* posEnemy = getPosition();
 		float* vertices = getVertices();
-		float posBullet[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
-		Bullet->setPosition(posBullet);
+		float posBullet[] = {posEnemy[0], posEnemy[1] + vertices[3] - vertices[2]};
+		bullet->setPosition(posBullet);
 	}
+
 
 }
 

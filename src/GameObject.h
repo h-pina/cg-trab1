@@ -4,6 +4,7 @@
 #include <GL/freeglut.h>
 #include <GL/gl.h>
 #include <array>
+#include "Primitives.h"
 
 namespace CG {
 	class GameObject {
