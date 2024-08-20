@@ -1,18 +1,24 @@
 #include "GameObject.h"
 #include <GL/gl.h>
+#include <iostream>
 
 namespace CG{
 	GameObject::GameObject(float* vertices)
 		:	m_vertices(vertices)
 	{ }
 
-	GameObject::GameObject( float* vertices, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
+	GameObject::GameObject( float* vertices,int health, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
 		:	m_tex(Tex2D(textureFile,texcoord)),
-			m_vertices(vertices),
+			m_health(health),
 			speedX(SpeedX),
 			speedY(SpeedY),
-			m_position(new float[2]{((vertices[1]-vertices[0])/2)+vertices[0],((vertices[3]-vertices[2])/2)+vertices[2]})
-	{ }
+			m_position(new float[2]{((vertices[1]-vertices[0])/2)+vertices[0],((vertices[3]-vertices[2])/2)+vertices[2]}),
+			m_status(true)
+	{ 
+		m_vertices = new float[4];
+		m_vertices = vertices;
+		
+	}
 
 	void GameObject::applyModelView(){
 		glTranslatef(m_position[0], m_position[1], 0);
@@ -26,6 +32,8 @@ namespace CG{
 		
 		glBegin(GL_QUADS);
 			m_tex.use();
+			std::cout<< m_vertices[0] << "  " << m_vertices[2] <<"\n";
+
 			defineObjectBox();
 		glEnd();
 	}
@@ -53,5 +61,24 @@ namespace CG{
 	}
 	float* GameObject::getVertices(){
 		return m_vertices;
+	}
+	int GameObject::getHealth(){
+        return m_health;
+    }
+    void GameObject::setHealth(int health){
+        m_health = health;
+		if(health<=0){
+			m_health=0;
+			m_status = false;
+		}else{
+			m_health = health;
+		}
+
+    }
+	bool GameObject::getStatus(){
+		return m_status;
+	}
+	void GameObject::setStatus(bool status){
+		m_status = status;
 	}
 }

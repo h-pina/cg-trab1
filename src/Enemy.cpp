@@ -1,38 +1,35 @@
-#include "Player.h"
+#include "Enemy.h"
 #include "GameObject.h"
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
-#include <iostream>
 #include <sys/time.h>
 #include <vector>
 
 
 namespace CG{
 	
-	// Player* Player::instance = nullptr;
 
-	Player::Player( float* vertices, int healthP, const char* textureFile,float SpeedY, float SpeedX, float* texcoord, int damage)
-		: GameObject(vertices, healthP, textureFile,SpeedY,SpeedX,texcoord)	
+	Enemy::Enemy( float* vertices, int health, const char* textureFile,float SpeedY, float SpeedX, float* texcoord, int damage)
+		: GameObject(vertices, health, textureFile,SpeedY,SpeedX,texcoord)	
 	{ 
 		
 		mouseButtonState = GLUT_UP;
-
-        float* posPlayer = getPosition();
-        float verticesBullet[4] = { posPlayer[0] - 34.0f / 2, posPlayer[0] + 34.0f / 2, posPlayer[1] - 54.0f / 2, posPlayer[1] + 54.0f / 2 };
+        float* posEnemy = getPosition();
+        float verticesBullet[4] = { posEnemy[0] - 34.0f / 2, posEnemy[0] + 34.0f / 2, posEnemy[1] - 54.0f / 2, posEnemy[1] + 54.0f / 2 };
         float textCoord[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-
-		float posBullet[] = {posPlayer[0],posPlayer[1]+vertices[3]-vertices[2]};
+		setStatus(false);
+		float posBullet[] = {posEnemy[0],posEnemy[1]+vertices[3]-vertices[2]};
         for (int i = 0; i < MAX_BulletS; i++) {
-            std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilEnemy.png", SpeedY, SpeedX, textCoord);
+
+			std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilEnemy.png", SpeedY, SpeedX, textCoord);
 
             m_Bullets.push_back(bullet);
 			restoreBulletPos(m_Bullets[i]);
         }
-		// instance = this;
 	}
 
-	void Player::movePlayer(unsigned char key) {
+	void Enemy::moveEnemy(unsigned char key) {
 
 		float* speedGroup =getSpeed();
 		float* texCoordinates = m_tex.getTexCrop(); 
@@ -74,7 +71,7 @@ namespace CG{
 
 
 
-	void Player::disparaProjetil(){
+	void Enemy::disparaProjetil(){
 		for (int i = 0; i < MAX_BulletS; ++i) {
 			if (m_Bullets[i]->getStatus() == false) {
 				restoreBulletPos(m_Bullets[i]);
@@ -83,12 +80,13 @@ namespace CG{
 			}
 		}
 	}
-	void Player::atualizaProjeteis(){
+	void Enemy::atualizaProjeteis(){
 		for (int i = 0; i < MAX_BulletS; ++i) {
 			if (m_Bullets[i]->getStatus() == true) {
 				float* pos = m_Bullets[i]->getPosition();
 				pos[1] += m_Bullets[i]->getSpeed()[1];
 				m_Bullets[i]->setPosition(pos);
+				
 				if (pos[1] > 1000) { //// arranjar forma de obter o tamanho da tela aqui
 					m_Bullets[i]->setStatus(false);
 					restoreBulletPos(m_Bullets[i]);
@@ -98,11 +96,11 @@ namespace CG{
 	}
 	
 
-	void Player::controlaDisparos() {
+	void Enemy::controlaDisparos() {
         // Get current time in milliseconds
         int now_ms = get_current_milliseconds();
         
-        // Example mouse state check (replace with actual state check)
+        
         printf("miliseg %d\n", now_ms);
         // Check if the left mouse button is pressed and if seconds are even
         if (mouseButtonState == GLUT_DOWN && ((now_ms % 500) < 5)) {
@@ -110,24 +108,22 @@ namespace CG{
         }
         atualizaProjeteis(); // Atualiza a posição dos projéteis
         glutPostRedisplay(); // Redesenha a tela
-        
     }
 	
 	
 
-	std::vector<std::shared_ptr<Bullet>> Player::getBullets()
+	std::vector<std::shared_ptr<Bullet>> Enemy::getBullets()
 	{
 		return m_Bullets;
 	}
-
 
 	
 
 // @@@@@@@@@@@@@@@@@@@@ 	Auxiliar 	@@@@@@@@@@@@@@@@@@@@
 
 
-	
-	void Player::restoreBulletPos(std::shared_ptr<Bullet> bullet)
+
+	void Enemy::restoreBulletPos(std::shared_ptr<Bullet> bullet)
 	{
 		float* posEnemy = getPosition();
 		float* vertices = getVertices();

@@ -4,6 +4,7 @@
 #include <GL/freeglut.h>
 #include <GL/gl.h>
 #include <array>
+#include "Primitives.h"
 
 namespace CG {
 	class GameObject {
@@ -11,6 +12,7 @@ namespace CG {
 
 			GameObject(
 				float* vertices,
+				int health,
 				const char* textureFile,
 				float SpeedY,
 				float SpeedX, 
@@ -31,7 +33,11 @@ namespace CG {
 			void setPosition(float* pos);
 			float* getPosition();
 			float* getVertices();
-			
+			int getHealth();
+			void setHealth(int health);
+			bool getStatus();
+			void setStatus(bool status);
+
 			Tex2D m_tex;
 
 		private:
@@ -41,6 +47,8 @@ namespace CG {
 			float speedY = 0;
 			float speedX = 0;
 			float* m_vertices;
+			int m_health;
+			bool m_status;
 		
 	};
 }

@@ -12,7 +12,7 @@ namespace CG{
 			void defineTexCrop();
 
 		private:
-			float* texCoord;
+			float texCoord[4];
 		
 			GLuint m_texId;
 	};
