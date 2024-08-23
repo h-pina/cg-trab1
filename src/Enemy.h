@@ -26,19 +26,25 @@ namespace CG {
 				int damage
 			);
 			
-			void moveEnemy(unsigned char key);
+			void movePlayer();
+			void keyboardDown(unsigned char key, int x, int y);
+			void keyboardUp(unsigned char key, int x, int y);
 			void disparaProjetil();
 			void atualizaProjeteis();
 			void controlaDisparos();
-			std::vector<std::shared_ptr<Bullet>> getBullets();
 			
+			void setTexCoordDefault(float* vertices);
+			void renderizar();
+			
+			std::vector<std::shared_ptr<Bullet>> getBullets();
+
 
 			void restoreBulletPos(std::shared_ptr<Bullet> bullet);
-			
-			int mouseButtonState;
 		private:
 			
 			std::vector<std::shared_ptr<Bullet>> m_Bullets;
+
+			float TexCoordDefault[4];
 			
 	};
 }

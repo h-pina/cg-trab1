@@ -19,16 +19,16 @@ namespace CG {
         strcat(fullPath, path);
 
 
-        std::cout << "Tentando carregar a textura: " << fullPath << std::endl;
         
-
+        
+        
         m_texId = SOIL_load_OGL_texture(
                             fullPath,
                             SOIL_LOAD_AUTO,
                             SOIL_CREATE_NEW_ID,
                             SOIL_FLAG_INVERT_Y
                         );
-                        
+        std::cout << path << "\t tex_id="<<m_texId << std::endl;
         if (m_texId == 0) {
                 std::cout << "Erro do SOIL ao carregar: \"" << fullPath << "\"\n" <<  SOIL_last_result() << std::endl;
         }
@@ -39,12 +39,11 @@ namespace CG {
         texCoord[1]=coord[1];
         texCoord[2]=coord[2];
         texCoord[3]=coord[3];
-        if (m_texId != 0){
-		    std::cout << "Textura Inicializada   \n";
-        }
+        
 	}
 
 	void Tex2D::use(){
+        
         glBindTexture(GL_TEXTURE_2D, m_texId);
         
 	}
@@ -56,15 +55,17 @@ namespace CG {
         texCoord[3]=coord[3];
     }
 
-    void Tex2D::defineTexCrop(){
-        glTexCoord2f(texCoord[0], texCoord[2]);
-        glTexCoord2f(texCoord[1], texCoord[2]);
-        glTexCoord2f(texCoord[1], texCoord[3]);
-        glTexCoord2f(texCoord[0], texCoord[3]);
+    void Tex2D::defineTexCrop(int x_index,int y_index){
+
+        glTexCoord2f(texCoord[x_index], texCoord[y_index+2]);
+
     }
 
 	float* Tex2D::getTexCrop() { 
 		return texCoord;
 	}
+    int Tex2D::getId(){
+        return m_texId;
+    }
 }
 

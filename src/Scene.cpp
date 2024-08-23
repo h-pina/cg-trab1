@@ -11,8 +11,8 @@ namespace CG {
 
 	Scene::Scene(Window* window, int lvl_id) {
 		//Create Player
-		float playerVertices[4] = {0.0f,0.2f,0.0f,0.1f};
-		float playerTexCoord[4] = {0.4f,0.42f,0.6f,0.55f};
+		float playerVertices[4] = {0.0f,100.0f,0.0f,50.0f};
+		float playerTexCoord[4] = {0.4f,0.6f,0.42f,0.55f};
 		
 		lvl_cfgs = Level(lvl_id);
 		m_player = std::make_shared<Player>(
@@ -84,7 +84,7 @@ namespace CG {
 		return m_sceneEnemys;
 	}
 
-
+	
 	Scene* Scene::getInstance() {
 		
 		return instanceGame;

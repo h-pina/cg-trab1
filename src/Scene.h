@@ -17,7 +17,7 @@ namespace CG {
 			std::shared_ptr<Player> getPlayer();
 			std::vector<std::shared_ptr<Enemy>> getSceneObjects();
 			void updateFrame(int value);
-			
+			void keyboardCallback(unsigned char key, int x, int y);
 			Scene* getInstance();
 			void startTimer();
 

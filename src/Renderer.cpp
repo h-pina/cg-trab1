@@ -6,7 +6,10 @@
 #include <GL/gl.h>
 #include <memory>
 
+
+
 namespace CG {
+	
 	Renderer::Renderer(Scene* scene)
 		:	m_scene(scene)
 	{ 
@@ -28,12 +31,12 @@ namespace CG {
 
 
 	void Renderer::render(){
-		glClearColor(1, 0.7, 0.7, 1);
+		glClearColor(1, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		std::shared_ptr<GameObject> player = m_scene->getPlayer();
+		std::shared_ptr<Player> player = m_scene->getPlayer();
 		
-		player->draw();
+		player->renderizar();
 		for(std::shared_ptr<GameObject> go : m_scene->getSceneObjects()){
 		
 			
@@ -54,7 +57,15 @@ namespace CG {
 		// 		glEnd();
 		// 	glPopMatrix();
 		}
+		
 		glutSwapBuffers();
+		
+	}
+
+
+	Scene* Renderer::getScene()
+	{
+		return m_scene;
 	}
 
 }

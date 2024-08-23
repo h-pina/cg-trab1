@@ -12,6 +12,7 @@ namespace CG {
 		void setInstances(Window* window, Renderer* renderer){
 			v_window = window;
 			v_renderer = renderer;
+			
 		}
 
 		void windowResizeCallback(int width, int height){
@@ -23,10 +24,18 @@ namespace CG {
 			if(v_renderer != nullptr)
 				v_renderer->render();
 		}
-
+		void movePlayerWrapper(unsigned char key, int x, int y) {
+			v_renderer->getScene()->getPlayer()->keyboardDown(key, x, y);
+		}
+		void restoreTexPos(unsigned char key, int x, int y) {
+			v_renderer->getScene()->getPlayer()->keyboardUp(key, x, y);
+		}
+		
 		void setupCallbacks(){
 			glutReshapeFunc(windowResizeCallback);
 			glutDisplayFunc(renderCallback);
+			glutKeyboardFunc(movePlayerWrapper);
+			glutKeyboardUpFunc(restoreTexPos);
 		}
 	}
 }

@@ -27,7 +27,7 @@ namespace CG {
 			
 			void applyModelView();
 			void draw();
-			void defineObjectBox();
+			void defineVertex(int x_index,int y_index);
 			float* getSpeed();
 			void setVertices(float* vertices);
 			void setPosition(float* pos);
