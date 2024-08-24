@@ -38,8 +38,7 @@ namespace CG{
 			{1, 1},
 			{0, 1}
 		};
-		//glEnable(GL_TEXTURE_2D); // Garantir que a textura está ativada
-    	// Redefinir a cor para branco antes de desenhar a textura
+		
 		
 		glEnable(GL_TEXTURE_2D);
 		m_tex.use();
@@ -52,8 +51,7 @@ namespace CG{
 				int x_index = indices[i][0];
 				int y_index = indices[i][1];
 				m_tex.defineTexCrop(x_index,y_index);
-				defineVertex(x_index,y_index);
-				
+				defineVertex(x_index,y_index);				
 			}
 
 
@@ -77,6 +75,8 @@ namespace CG{
 		m_vertices[1] = vertices[1];
 		m_vertices[2] = vertices[2];
 		m_vertices[3] = vertices[3];
+		float updatedPos[2]={(m_vertices[1]-m_vertices[0])/2+m_vertices[0],(m_vertices[3]-m_vertices[2])/2+m_vertices[2]};
+		setPosition(updatedPos);
 	}
 	void GameObject::setPosition(float* pos){
 		m_position[0] = pos[0];

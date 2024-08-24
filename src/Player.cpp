@@ -19,7 +19,7 @@ namespace CG{
         setTexCoordDefault(texcoord);
 
         float* posPlayer = getPosition();
-        float verticesBullet[4] = { posPlayer[0] - 34.0f / 2, posPlayer[0] + 34.0f / 2, (posPlayer[1] + ((vertices[2] - vertices[3]) / 2)) - 54.0f / 2, (posPlayer[1] + ((vertices[2] - vertices[3]) / 2)) + 54.0f / 2 };
+        float verticesBullet[4] = { posPlayer[0] - 12.6f / 2, posPlayer[0] + 12.6f / 2, (posPlayer[1] + ((vertices[2] - vertices[3]) / 2)) - 20.0f / 2, (posPlayer[1] + ((vertices[2] - vertices[3]) / 2)) + 20.0f / 2 };
         float textCoord[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
 
         float posBullet[] = { posPlayer[0], posPlayer[1] + vertices[3] - vertices[2] };
@@ -59,12 +59,12 @@ namespace CG{
             texCoordinates[0] = TexCoordDefault[0] + 0.2;
             texCoordinates[1] = TexCoordDefault[1] + 0.2;
         }
-		if(keyStates[' ']){
-			controlaDisparos();
-		}
+		
 
         m_tex.remapTexCrop(texCoordinates);
         setVertices(vertices);
+        float* pos = getPosition();
+        std::cout << "POS = (" << pos[0] << "," << pos[1] << ")\n";
         glutPostRedisplay();
     }
 
@@ -76,28 +76,28 @@ namespace CG{
     void Player::keyboardUp(unsigned char key, int x, int y) {
         keyStates[key] = false;
         float texCoord[4] = { 0.4f, 0.6f, 0.42f, 0.55f };
-        
-        m_tex.remapTexCrop(texCoord);
+        if(key==' '){
+            disparaProjetil();
+        }
+        m_tex.remapTexCrop( texCoord);
         glutPostRedisplay();
     }
 	
-	
-
-
-
 	void Player::disparaProjetil(){
 		for (int i = 0; i < MAX_BulletS; ++i) {
 			if (m_Bullets[i]->getStatus() == false) {
-				restoreBulletPos(m_Bullets[i]);
+                restoreBulletPos(m_Bullets[i]);
 				m_Bullets[i]->setStatus(true);
-				m_Bullets[i]->draw();
+				
 				break;
 			}
 		}
 	}
 	void Player::atualizaProjeteis(){
+        
 		for (int i = 0; i < MAX_BulletS; ++i) {
 			if (m_Bullets[i]->getStatus() == true) {
+                
 				float* verticesB = m_Bullets[i]->getVertices();
 				verticesB[2] += m_Bullets[i]->getSpeed()[1];
 				verticesB[3] += m_Bullets[i]->getSpeed()[1];
@@ -108,22 +108,17 @@ namespace CG{
 				}
 			}
 		}
+                
 	}
 	
 
-	void Player::controlaDisparos() {
-        // Get current time in milliseconds
-        int now_ms = get_current_milliseconds();
+	void Player::desenhaDisparos() {
         
-        // Example mouse state check (replace with actual state check)
-        
-        // Check if the left mouse button is pressed and if seconds are even
-        if (keyStates[' '] == true && ((now_ms % 500) < 5)) {
-			std::cout << "DISPAROU\n";
-            disparaProjetil(); // Dispara o projétil a partir da posição atual do avião
-        }
-        atualizaProjeteis(); // Atualiza a posição dos projéteis
-        glutPostRedisplay(); // Redesenha a tela
+        for (int i = 0; i < MAX_BulletS; ++i) {
+			if (m_Bullets[i]->getStatus() == true) {
+				m_Bullets[i]->draw();
+			}
+		}
         
     }
 
@@ -138,7 +133,7 @@ namespace CG{
 	
 	void Player::renderizar(){
 		draw();
-		controlaDisparos();
+	    desenhaDisparos();
 	}
 
 	std::vector<std::shared_ptr<Bullet>> Player::getBullets()
@@ -157,8 +152,15 @@ namespace CG{
 	{
 		float* posPlayer = getPosition();
 		float* vertices = getVertices();
-		float posBullet[] = { posPlayer[0] - 34.0f / 2, posPlayer[0] + 34.0f / 2, (posPlayer[1]+((vertices[2]-vertices[3])/2)) - 54.0f / 2, (posPlayer[1]+((vertices[2]-vertices[3])/2)) + 54.0f / 2 };
-		bullet->setPosition(posBullet);
+		float posBullet[] = {
+            posPlayer[0] - 12.6f / 2,
+            posPlayer[0] + 12.6f / 2,
+            vertices[3] - 20.0f * 0.4f ,
+            vertices[3] + 20.0f * 0.6f 
+        };
+        bullet->setStatus(false);
+        bullet->setVertices(posBullet);
+        
 	}
 // Adicione esta função no Player.cpp ou em um arquivo de cabeçalho apropriado
 

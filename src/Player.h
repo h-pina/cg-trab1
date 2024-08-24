@@ -31,7 +31,7 @@ namespace CG {
 			void keyboardUp(unsigned char key, int x, int y);
 			void disparaProjetil();
 			void atualizaProjeteis();
-			void controlaDisparos();
+			void desenhaDisparos();
 			
 			void setTexCoordDefault(float* vertices);
 			void renderizar();

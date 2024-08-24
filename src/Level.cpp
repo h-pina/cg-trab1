@@ -42,7 +42,7 @@ namespace CG {
                     //Exibe um novo inimigo                    
                 }
                 else{
-                    EnemyList[i]->moveEnemy('s');
+                    EnemyList[i]->keyboardDown('s',5,5);
                 }
             }
         }

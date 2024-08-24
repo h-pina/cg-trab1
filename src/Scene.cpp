@@ -7,7 +7,7 @@
 
 namespace CG {
 	
-	Scene* instance = nullptr;
+	
 
 	Scene::Scene(Window* window, int lvl_id) {
 		//Create Player
@@ -37,39 +37,39 @@ namespace CG {
 	void Scene::updateFrame(int value){
 		int points = 0;
 
-		//Update Enemy's Shoots, moves and spawn
-		lvl_cfgs.npcController(m_sceneEnemys);
+		// //Update Enemy's Shoots, moves and spawn
+		// lvl_cfgs.npcController(m_sceneEnemys);
 
-		//Detect colision between Enemy bullets and Player
-		for (size_t i = 0; i < m_sceneEnemys.size(); ++i) {
-			m_sceneEnemys[i]->controlaDisparos();
-			std::vector<std::shared_ptr<Bullet>> e_bul = m_sceneEnemys[i]->getBullets();
-			for(int j = 0; j < MAX_BulletS;j++){
-				int lose = detectColision(e_bul[j].get(),m_player.get());
-				if(lose == 0)
-				{
-					//MOrreu o player
-				}
-			}
-		}
+		// //Detect colision between Enemy bullets and Player
+		// for (size_t i = 0; i < m_sceneEnemys.size(); ++i) {
+		// 	m_sceneEnemys[i]->controlaDisparos();
+		// 	std::vector<std::shared_ptr<Bullet>> e_bul = m_sceneEnemys[i]->getBullets();
+		// 	for(int j = 0; j < MAX_BulletS;j++){
+		// 		int lose = detectColision(e_bul[j].get(),m_player.get());
+		// 		if(lose == 0)
+		// 		{
+		// 			//MOrreu o player
+		// 		}
+		// 	}
+		// }
 
 		//Hit controller
 
-		m_player->controlaDisparos();
-		std::vector<std::shared_ptr<Bullet>>  p_bul = m_player->getBullets();
+		m_player->atualizaProjeteis();
+		// std::vector<std::shared_ptr<Bullet>>  p_bul = m_player->getBullets();
 		
-		//Detect colision between PLayer bullets and any Enemy
-		for(int i = 0; i < MAX_BulletS;i++){
+		// //Detect colision between PLayer bullets and any Enemy
+		// for(int i = 0; i < MAX_BulletS;i++){
 
-			for (size_t j = 0; j < m_sceneEnemys.size(); ++j) {
-				points+=detectColision(p_bul[i].get(),m_sceneEnemys[j].get());
-			}
+		// 	for (size_t j = 0; j < m_sceneEnemys.size(); ++j) {
+		// 		points+=detectColision(p_bul[i].get(),m_sceneEnemys[j].get());
+		// 	}
 			
-		}
+		// }
 		
 		//Definir função para add pontos @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-		glutTimerFunc(value, [](int v) { instance->updateFrame(v); }, value); // Define o próximo frame
+		glutPostRedisplay();
+		
 	}
 
 	std::shared_ptr<Player> Scene::getPlayer(){
