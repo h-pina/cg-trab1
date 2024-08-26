@@ -13,11 +13,11 @@ namespace CG{
 
 
 	Enemy::Enemy(float* vertices, int health, const char* textureFile, float SpeedY, float SpeedX, float* texcoord, int damage)
-    : GameObject(vertices, health, textureFile, SpeedX, SpeedY, texcoord) 
+    : GameObject(vertices, health, textureFile, SpeedY*0.8, SpeedX*0.8, texcoord) 
 	{
 		
 		keyStatesEnemy['s'] = true;
-		
+		creationTime = get_current_seconds();
 		keyStatesEnemy[' '] = true;
 		float* posEnemy = getPosition();
 		
@@ -27,7 +27,7 @@ namespace CG{
 		setStatus(false);
 		float posBullet[] = {posEnemy[0], posEnemy[1] + vertices[3] - vertices[2]};
 		for (int i = 0; i < MAX_BulletS; i++) {
-			std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilEnemy.png", SpeedY*2, SpeedX*2, textCoord);
+			std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilEnemy.png", SpeedY*1.4, SpeedX*1.4, textCoord);
 			m_Bullets.push_back(bullet);
 			restoreBulletPos(m_Bullets[i]);
 			m_Bullets[i]->setStatus(false);
@@ -84,8 +84,8 @@ namespace CG{
 	
 	
 	void Enemy::shootController(){
-		if (get_current_milliseconds() % 600<5 && getStatus()==true) {
-			std::cout << "Inimigo Disparou\n";
+		if (get_current_milliseconds() % 600<5 && (get_current_seconds()-creationTime)%3>0 && getStatus()==true) {
+			
 			disparaProjetil();
 		}
 	}
@@ -142,7 +142,9 @@ namespace CG{
 	}
 	
 	void Enemy::renderizar(){
-		draw();
+		if(getStatus()==true){
+			drawEnemy();
+		}
 	    desenhaDisparos();
 	}
 

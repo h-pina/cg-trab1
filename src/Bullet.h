@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-
+#define MAX_BulletS 5
 namespace CG {
 	class Bullet : public GameObject { // Added 'public' keyword
 		public:

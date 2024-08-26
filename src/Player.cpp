@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "GameObject.h"
+
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
@@ -24,7 +25,7 @@ namespace CG{
         setStatus(true);
         float posBullet[] = { posPlayer[0], posPlayer[1] + vertices[3] - vertices[2] };
         for (int i = 0; i < MAX_BulletS; i++) {
-            std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilPlayer.png", SpeedY*1.5, SpeedX*1.5, textCoord);
+            std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilPlayer.png", SpeedY*0.5, SpeedX*1.0, textCoord);
             m_Bullets.push_back(bullet);
             restoreBulletPos(m_Bullets[i]);
         }

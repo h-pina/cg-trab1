@@ -11,14 +11,14 @@ namespace CG {
 
 	Scene::Scene(Window* window, int lvl_id) {
 		//Create Player
-		float playerVertices[4] = {-50.0f,50.0f,-450.0f,-400.0f};
-		float enemyVertices[4] = {-50.0f,50.0f,400.0f,450.0f};
+		float playerVertices[4] = {-80.0f,80.0f,-450.0f,-400.0f};
+		float enemyVertices[4] = {-80.0f,80.0f,400.0f,450.0f};
 		float playerTexCoord[4] = {0.4f,0.6f,0.42f,0.55f};
 		float enemyTexCoord[4] = {0.4f,0.6f,0.55f,0.42f};
 		
 		lvl_cfgs = Level(lvl_id);
 		m_player = std::make_shared<Player>(
-			playerVertices,lvl_cfgs.getPlayerHP(),"textures/avioes.png",4.0f,4.0f,playerTexCoord,lvl_cfgs.getPlayerDamage()
+			playerVertices,lvl_cfgs.getPlayerHP(),"textures/avioes.png",15.0f,15.0f,playerTexCoord,lvl_cfgs.getPlayerDamage()
 		);
 		
 		//Create GameObjecks 
@@ -70,12 +70,23 @@ namespace CG {
 				for (size_t j = 0; j < m_sceneEnemys.size(); ++j) {
 					if(m_sceneEnemys[i]->getStatus()==true)
 					{
-						points+=detectColision(p_bul[i].get(),m_sceneEnemys[j].get());
+						int point=detectColision(p_bul[i].get(),m_sceneEnemys[j].get());
+						points+=point;
+						if(point!=0)
+						{
+							lvl_cfgs.killEnemy();
+						}
+
+						if(lvl_cfgs.getTotalEnemys()<=0){
+							std::cout << "You Win" << std::endl;
+							exit(0);
+						}
 					}
 				}
 			}
 			
 		}
+		
 		lvl_cfgs.setPoints(points);
 		
 		//Definir função para add pontos @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

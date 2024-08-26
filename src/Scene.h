@@ -21,6 +21,7 @@ namespace CG {
 			Scene* getInstance();
 			void startTimer();
 			Level* getLevel();
+			
 
 		private:	
 			Window* m_window;

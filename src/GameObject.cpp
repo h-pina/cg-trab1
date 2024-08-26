@@ -69,6 +69,38 @@ namespace CG{
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
 	}
+
+	void GameObject::drawEnemy(){
+
+		int indices[4][2] = {
+			{0, 0},
+			{1, 0},
+			{1, 1},
+			{0, 1}
+		};
+		
+		
+		glEnable(GL_TEXTURE_2D);
+		m_tex.use();
+		glColor3f(1.0f, 0.5f, 0.5f);
+	
+		glBegin(GL_QUADS);
+			
+			
+			for(int i = 0; i < 4; i++) {
+				int x_index = indices[i][0];
+				int y_index = indices[i][1];
+				m_tex.defineTexCrop(x_index,y_index);
+				defineVertex(x_index,y_index);				
+			}
+
+
+			
+			
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+	}
+
 	void GameObject::defineVertex(int x_index,int y_index){
 		glVertex3f(m_vertices[x_index], m_vertices[y_index+2],1); 
 		

@@ -10,7 +10,7 @@
 #include <sys/time.h>
 
 
-#define MAX_BulletS 5
+
 
 
 namespace CG {

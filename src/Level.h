@@ -21,6 +21,8 @@ namespace CG {
             int getID();
             int getPoints();
             void setPoints(int Points);
+            void killEnemy();
+			
             
             
            

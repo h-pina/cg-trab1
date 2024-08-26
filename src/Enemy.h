@@ -10,7 +10,7 @@
 #include <sys/time.h>
 
 
-#define MAX_BulletS 5
+
 
 
 namespace CG {
@@ -44,7 +44,7 @@ namespace CG {
 		private:
 			
 			std::vector<std::shared_ptr<Bullet>> m_Bullets;
-
+			int creationTime;
 			float TexCoordDefault[4];
 			
 	};

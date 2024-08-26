@@ -27,6 +27,7 @@ namespace CG {
 			
 			void applyModelView();
 			void draw();
+			void drawEnemy();
 			void defineVertex(int x_index,int y_index);
 			float* getSpeed();
 			void setSpeed(float* speedGroup);

@@ -7,7 +7,7 @@ namespace CG {
         if(id==1){  // Define os parâmetros do Level 1
             m_id = id;
             n_enemys = 3;
-            total_enemys = 35;
+            total_enemys = 5;
             enemys_base_hp = 2;
             enemys_base_damage = 2;
             player_hp = 8;
@@ -58,7 +58,7 @@ namespace CG {
 
     void Level::npcSpawn(std::vector<std::shared_ptr<Enemy>> EnemyList) {
         int secClock = get_current_seconds();
-        int msClock = get_current_milliseconds();
+        int msClock = rand();
         int spawn = 0;
         for (int i = 0; i < n_enemys; i++) {
                    
@@ -70,14 +70,14 @@ namespace CG {
                     int factor = pow(-1,secClock%2);
                     
 
-                    float xDefault =msClock%500*factor;
+                    float xDefault =msClock%800*factor;
                     float* enemyVertices = EnemyList[i]->getVertices();
                     //Garante que o inimigo va estar sempre a 10 pontos da margem direita ou esquerda 
-                    if(xDefault<-440){
-                        xDefault = -440;
+                    if(xDefault<-740){
+                        xDefault = -740;
                     }
-                    else if(xDefault>440){
-                        xDefault = 440;
+                    else if(xDefault>740){
+                        xDefault = 740;
                     }
                     float verticesEnemy[4] = {xDefault-(enemyVertices[1]-enemyVertices[0])/2,xDefault+(enemyVertices[1]-enemyVertices[0])/2,400.0f-(enemyVertices[3]-enemyVertices[2]),400.0f};
                     EnemyList[i]->setVertices(verticesEnemy);
@@ -92,14 +92,15 @@ namespace CG {
                 }
                 
             }
-            if(EnemyList[i]->getStatus()==true ){
-                EnemyList[i]->renderizar();
-            }
+            
+            EnemyList[i]->renderizar();
         }
 
     }
 
-
+    void Level::killEnemy(){
+        total_enemys--;
+    }
     
 
     int Level::getNEnemys() {
