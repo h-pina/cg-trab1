@@ -21,10 +21,10 @@ namespace CG{
         float* posPlayer = getPosition();
         float verticesBullet[4] = { posPlayer[0] - 12.6f / 2, posPlayer[0] + 12.6f / 2, (posPlayer[1] + ((vertices[2] - vertices[3]) / 2)) - 20.0f / 2, (posPlayer[1] + ((vertices[2] - vertices[3]) / 2)) + 20.0f / 2 };
         float textCoord[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-
+        setStatus(true);
         float posBullet[] = { posPlayer[0], posPlayer[1] + vertices[3] - vertices[2] };
         for (int i = 0; i < MAX_BulletS; i++) {
-            std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilPlayer.png", SpeedY, SpeedX, textCoord);
+            std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(verticesBullet, damage, "textures/projetilPlayer.png", SpeedY*1.5, SpeedX*1.5, textCoord);
             m_Bullets.push_back(bullet);
             restoreBulletPos(m_Bullets[i]);
         }
@@ -34,7 +34,7 @@ namespace CG{
         float* speedGroup = getSpeed();
         float* texCoordinates = m_tex.getTexCrop();
         float* vertices = getVertices();
-
+        
         if (keyStates['w']) {
             vertices[2] += speedGroup[1];
             vertices[3] += speedGroup[1];

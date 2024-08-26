@@ -10,17 +10,26 @@ namespace CG{
 	GameObject::GameObject( float* vertices,int health, const char* textureFile,float SpeedY, float SpeedX, float* texcoord)
 		:	m_tex(Tex2D(textureFile,texcoord)),
 			m_health(health),
-			speedX(SpeedX),
-			speedY(SpeedY),
+			
 			m_position(new float[2]{((vertices[1]-vertices[0])/2)+vertices[0],((vertices[3]-vertices[2])/2)+vertices[2]}),
-			m_status(true)
+			m_status(false)
 	{ 
+
+		
+		HPbase = health;
+		m_speed = new float[2];
+		m_speed[0] = SpeedX;
+		m_speed[1] = SpeedY;
 		
 		m_vertices = new float[4];
 		m_vertices[0] = vertices[0];
 		m_vertices[1] = vertices[1];
 		m_vertices[2] = vertices[2];
 		m_vertices[3] = vertices[3];
+		
+		
+		
+		//setDimensions();
 		
 		
 	}
@@ -66,8 +75,12 @@ namespace CG{
 	}
 
 	float* GameObject::getSpeed() {
-		static float speedGroup[2] = {speedX, speedY};
-		return speedGroup;
+		return m_speed;
+	}
+	void GameObject::setSpeed(float* speedGroup)
+	{
+		m_speed[0] = speedGroup[0];
+		m_speed[1] = speedGroup[1];
 	}
 
 	void GameObject::setVertices(float* vertices){
@@ -98,6 +111,7 @@ namespace CG{
 		if(health<=0){
 			m_health=0;
 			m_status = false;
+			
 		}else{
 			m_health = health;
 		}
@@ -108,5 +122,17 @@ namespace CG{
 	}
 	void GameObject::setStatus(bool status){
 		m_status = status;
+	}
+	int GameObject::getHPbase(){
+		return HPbase;
+	}
+
+	void GameObject::setDimensions(){
+		m_dimensions[0]=m_vertices[1]-m_vertices[0];
+		m_dimensions[1]=m_vertices[3]-m_vertices[2];
+	}
+	float* GameObject::getDimensions()
+	{
+		return m_dimensions;
 	}
 }

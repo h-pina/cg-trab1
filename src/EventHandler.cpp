@@ -34,7 +34,7 @@ namespace CG {
 		void secundaryProcessController(int value){
 			
 			v_renderer->getScene()->updateFrame(value);
-			glutTimerFunc(1000/60, secundaryProcessController, 0);
+			glutTimerFunc(1000/120, secundaryProcessController, 0);
 		}
 		
 		void setupCallbacks(){
@@ -42,7 +42,7 @@ namespace CG {
 			glutDisplayFunc(renderCallback);
 			glutKeyboardFunc(movePlayerWrapper);
 			glutKeyboardUpFunc(restoreTexPos);
-			glutTimerFunc(1000/60, secundaryProcessController, 0);
+			glutTimerFunc(1000/120, secundaryProcessController, 0);
 		}
 	}
 }

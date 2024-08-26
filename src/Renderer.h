@@ -10,6 +10,7 @@ namespace CG {
 			Renderer(Scene* scene);
 			void render();
 			Scene* getScene();
+			
 
 		private:
 			Scene* m_scene;

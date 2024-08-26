@@ -17,8 +17,8 @@ namespace CG {
 	}
 
 	void Application::run(){
-		m_window = std::make_unique<Window>("Jet Scene", 800, 601);
-		m_scene = std::make_unique<Scene>(m_window.get(),1);
+		m_window = std::make_unique<Window>("Jet Scene", 1920, 1080);
+		m_scene = std::make_unique<Scene>(m_window.get(),3);
 		m_renderer = std::make_unique<Renderer>(m_scene.get());
 
 		setupCallbacks();

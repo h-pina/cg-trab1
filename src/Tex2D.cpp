@@ -28,7 +28,7 @@ namespace CG {
                             SOIL_CREATE_NEW_ID,
                             SOIL_FLAG_INVERT_Y
                         );
-        std::cout << path << "\t tex_id="<<m_texId << std::endl;
+        
         if (m_texId == 0) {
                 std::cout << "Erro do SOIL ao carregar: \"" << fullPath << "\"\n" <<  SOIL_last_result() << std::endl;
         }

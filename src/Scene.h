@@ -20,6 +20,7 @@ namespace CG {
 			void keyboardCallback(unsigned char key, int x, int y);
 			Scene* getInstance();
 			void startTimer();
+			Level* getLevel();
 
 		private:	
 			Window* m_window;

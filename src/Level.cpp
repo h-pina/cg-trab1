@@ -1,5 +1,6 @@
 #include "Level.h"
 #include <memory>
+#include <math.h>
 
 namespace CG {
     Level::Level(int id) {
@@ -31,23 +32,75 @@ namespace CG {
             player_damage = 2;
         }
         Timer = -1;
+        points = 0;
     }
 
     void Level::npcController(std::vector<std::shared_ptr<Enemy>> EnemyList) {
+        int ms = get_current_milliseconds();
+        for (int i = 0; i < n_enemys; i++) {
+            
+            float* vertices = EnemyList[i]->getVertices();
+            if(EnemyList[i]->getStatus()==true){
+                EnemyList[i]->keyboardDown('s',5,5);
+                if(ms<500){
+                    //EnemyList[i]->disparaProjetil();
+                }
+                
+                if(EnemyList[i]->getStatus() == true && vertices[2]<=-450.0f){
+                    EnemyList[i]->setStatus(false);
+                }    
+            }
+            
+        }
+        
+
+    }
+
+    void Level::npcSpawn(std::vector<std::shared_ptr<Enemy>> EnemyList) {
         int secClock = get_current_seconds();
-        if(((secClock % 3) == 0) && ((secClock/3)!=Timer)){
-            Timer = secClock/3;
-            for (int i = 0; i < n_enemys; i++) {
-                if(EnemyList[i]->getStatus()==false){
-                    //Exibe um novo inimigo                    
+        int msClock = get_current_milliseconds();
+        int spawn = 0;
+        for (int i = 0; i < n_enemys; i++) {
+                   
+            if((secClock % 3) == 0 && (Timer)!=(secClock/3)){
+            
+                if(EnemyList[i]->getStatus()==false and spawn==0){
+                    //Exibe um novo inimigo
+                    spawn=1;
+                    int factor = pow(-1,secClock%2);
+                    
+
+                    float xDefault =msClock%500*factor;
+                    float* enemyVertices = EnemyList[i]->getVertices();
+                    //Garante que o inimigo va estar sempre a 10 pontos da margem direita ou esquerda 
+                    if(xDefault<-440){
+                        xDefault = -440;
+                    }
+                    else if(xDefault>440){
+                        xDefault = 440;
+                    }
+                    float verticesEnemy[4] = {xDefault-(enemyVertices[1]-enemyVertices[0])/2,xDefault+(enemyVertices[1]-enemyVertices[0])/2,400.0f-(enemyVertices[3]-enemyVertices[2]),400.0f};
+                    EnemyList[i]->setVertices(verticesEnemy);
+                    EnemyList[i]->setHealth(enemys_base_hp);
+                    
+                    EnemyList[i]->setStatus(true);
+                    EnemyList[i]->renderizar();
+                    Timer = secClock/3;
+                    
+                    
+                           
                 }
-                else{
-                    EnemyList[i]->keyboardDown('s',5,5);
-                }
+                
+            }
+            if(EnemyList[i]->getStatus()==true ){
+                EnemyList[i]->renderizar();
             }
         }
 
     }
+
+
+    
 
     int Level::getNEnemys() {
         return n_enemys;
@@ -68,6 +121,12 @@ namespace CG {
     }
     int Level::getPlayerDamage(){
         return player_damage;
+    }
+    int Level::getPoints(){
+        return points;
+    }
+    void Level::setPoints(int Points){
+        points = Points;
     }
     
 }

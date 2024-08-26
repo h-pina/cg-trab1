@@ -31,33 +31,34 @@ namespace CG {
 
 
 	void Renderer::render(){
+
+		int points = 0;
 		glClearColor(1, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		std::shared_ptr<Player> player = m_scene->getPlayer();
-		
+		std::vector<std::shared_ptr<Enemy>> enmeysList = m_scene->getSceneObjects();
+
 		player->renderizar();
-		for(std::shared_ptr<GameObject> go : m_scene->getSceneObjects()){
+
+		m_scene->getLevel()->npcSpawn(enmeysList);
+
+
+		// player->atualizaProjeteis();
+		// std::vector<std::shared_ptr<Bullet>>  p_bul = player->getBullets();
 		
+		// //Detect colision between PLayer bullets and any Enemy
+		// for(int i = 0; i < MAX_BulletS;i++){
+
+		// 	if(p_bul[i]->getStatus()==true){
+		// 		for (size_t j = 0; j < enmeysList.size(); ++j) {
+		// 			points+=detectColision(p_bul[i].get(),enmeysList[j].get());
+		// 		}
+		// 	}
 			
-		
-		// 	go->m_tex.use();	
-		// 	glPushMatrix();
-		// 		go->applyModelView();
-		// 		glBegin(GL_TRIANGLE_FAN);
-		// 			float* goVertices = go->getVertices();
-		// 			drawVertices(goVertices, 8, 0);
-		// 			float texVertices[] = {
-		// 				0, 0,
-		// 				100, 0,
-		// 				100, 100,
-		// 				0, 100,
-		// 			};
-		// 			drawVertices(texVertices, 8, 1);
-		// 		glEnd();
-		// 	glPopMatrix();
-		}
-		
+		// }
+
+				
 		glutSwapBuffers();
 		
 	}
