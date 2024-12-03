@@ -7,5 +7,6 @@ namespace CG {
 		void setupCallbacks();
 		void setInstances(Window* window, Renderer* renderer);
 		void windowResizeCallback(int width, int height);
+		
 	}
 }

@@ -3,10 +3,10 @@
 #include "Bullet.h"
 #include <stdio.h>
 #include <math.h>
-#include <time.h>
-#include <memory>
-#include <vector>
 #include <iostream>
+#include <vector>
+#include <memory>
+#include <time.h>
 #include <sys/time.h>
 
 
@@ -14,11 +14,11 @@
 
 
 namespace CG {
-	class Player: public GameObject {
+	class Enemy: public GameObject {
 		public:
-			Player(
+			Enemy(
 				float* vertices,
-				int healthP,
+				int health,
 				const char* textureFile,
 				float SpeedY, 
 				float SpeedX,
@@ -32,6 +32,7 @@ namespace CG {
 			void disparaProjetil();
 			void atualizaProjeteis();
 			void desenhaDisparos();
+			void shootController();
 			
 			void setTexCoordDefault(float* vertices);
 			void renderizar();
@@ -40,13 +41,11 @@ namespace CG {
 
 
 			void restoreBulletPos(std::shared_ptr<Bullet> bullet);
-			
-			
-
-			
-			
 		private:
-			float TexCoordDefault[4];
+			
 			std::vector<std::shared_ptr<Bullet>> m_Bullets;
+			int creationTime;
+			float TexCoordDefault[4];
+			
 	};
 }

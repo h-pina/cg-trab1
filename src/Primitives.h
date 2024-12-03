@@ -16,5 +16,7 @@ namespace CG {
 		void drawTriangle(Color color, Point center, int sideLenght);
 		void drawCircle(Color color, Point center, float radius, float resolution);
 	}
+	int get_current_milliseconds();
+	int get_current_seconds();
 }
 

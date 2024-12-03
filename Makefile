@@ -4,7 +4,7 @@ DEBUG_FLAGS=-g
 
 OUTPUT_NAME=game
 
-all: src/main.cpp 
+all:  src/main.cpp 
 	$(CC) -o ${OUTPUT_NAME} src/*.cpp $(INCLUDE_FLAGS) ${DEBUG_FLAGS}
 
 run: all
